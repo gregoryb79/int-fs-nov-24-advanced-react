@@ -17,10 +17,10 @@
 .backdrop {
     position: fixed;
     inset: 0;
-    background: hsl(0deg 0 0 / 0.4);
+    background: hsl(0deg 0% 0% / 0.4);
 }
 
-.formField {
+@mixin formField {
     display: flex;
     flex-direction: column;
 
@@ -33,6 +33,19 @@
             color: red;
         }
     }
+}
+
+.formField {
+    @include formField;
+}
+
+.inlineFormField {
+    @include formField;
+
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.5rem;
 }
 
 .formActions {
