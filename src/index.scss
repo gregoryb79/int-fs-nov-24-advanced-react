@@ -1,0 +1,33 @@
+:root {
+  --color-primary-100: hsl(145deg 20% 95%);
+  --color-primary-500: hsl(145deg 56% 37%);
+  --color-secondary-500: hsl(49deg 70% 55%);
+}
+
+*, *::after, *::before {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+html {
+  font-size: calc(1rem + 0.5vw);
+  line-height: 1.5;
+}
+
+body {
+  font-family: system-ui;
+  background: var(--color-primary-100);
+}
+
+input, button, select, textarea {
+  font-size: inherit;
+  font-family: inherit;
+  line-height: inherit;
+}
+
+h1 {
+  color: var(--color-primary-500);
+}

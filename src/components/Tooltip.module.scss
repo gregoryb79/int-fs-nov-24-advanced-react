@@ -1,0 +1,13 @@
+.summary {
+    list-style: none;
+    cursor: pointer;
+    user-select: none;
+}
+
+.tooltip {
+    border: 1px solid var(--color-primary-500);
+    border-radius: 8px;
+    background: white;
+    position: absolute;
+    max-width: 40ch;
+}
