@@ -10,8 +10,20 @@ export function MyForm({ onCancelClick }: MyFormProps) {
     const formRef = useRef<HTMLFormElement>(null);
 
     useEffect(() => {
-        function preventScroll(e: Event) {
-            if (formRef.current?.contains(e.target as Element)) {
+        function preventScroll(e: WheelEvent) {
+            const el = e.target as Element;
+            const isInsideModal = formRef.current?.contains(el);
+
+            if (!isInsideModal) {
+                e.preventDefault();
+                return;
+            }
+
+            const canScrollDown = el.scrollHeight - el.scrollTop - 1 > el.clientHeight;
+            const canScrollUp = el.scrollTop > 0;
+            const isScrollingDown = e.deltaY > 0;
+
+            if ((isScrollingDown && canScrollDown) || (!isScrollingDown && canScrollUp)) {
                 return;
             }
 
