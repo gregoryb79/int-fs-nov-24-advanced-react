@@ -1,5 +1,6 @@
 import { useEffect, useReducer, useRef, useState, type FormEvent } from "react";
 import styles from "./MyForm.module.scss";
+import { Dropdown, Option } from "./Dropdown";
 
 type MyFormProps = {
     onCancelClick(): void;
@@ -68,12 +69,18 @@ export function MyForm({ onCancelClick }: MyFormProps) {
                 </div>
                 <div className={styles.formField}>
                     <label htmlFor="class">Class</label>
-                    <select className={styles.input} id="class" name="class">
+                    {/* <select className={styles.input} id="class" name="class">
                         <option value="warrior">Warrior</option>
                         <option value="mage">Mage</option>
                         <option value="thief">Thief</option>
                         <option value="cleric">Cleric</option>
-                    </select>
+                    </select> */}
+                    <Dropdown id="class" name="class">
+                        <Option value="warrior">Warrior</Option>
+                        <Option value="mage">Mage</Option>
+                        <Option value="thief">Thief</Option>
+                        <Option value="cleric">Cleric</Option>
+                    </Dropdown>
                 </div>
                 <div className={styles.formField}>
                     <label htmlFor="bio">Bio</label>
