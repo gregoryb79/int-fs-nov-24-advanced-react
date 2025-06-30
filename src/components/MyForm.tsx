@@ -68,18 +68,36 @@ export function MyForm({ onCancelClick }: MyFormProps) {
                     <input className={styles.input} type="text" id="name" name="name" required minLength={5} maxLength={30} />
                 </div>
                 <div className={styles.formField}>
-                    <label htmlFor="class">Class</label>
-                    {/* <select className={styles.input} id="class" name="class">
-                        <option value="warrior">Warrior</option>
-                        <option value="mage">Mage</option>
-                        <option value="thief">Thief</option>
-                        <option value="cleric">Cleric</option>
-                    </select> */}
+                    <label htmlFor="class">Class</label>                    
                     <Dropdown id="class" name="class">
-                        <Option value="warrior">Warrior</Option>
-                        <Option value="mage">Mage</Option>
-                        <Option value="thief">Thief</Option>
-                        <Option value="cleric">Cleric</Option>
+                        <Option value="warrior">                            
+                                <section className={styles.titleSection}>
+                                    <img src="https://placehold.co/40x40" alt="" />
+                                    <h5>Warrior</h5>
+                                </section>
+                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>                                                      
+                        </Option>
+                        <Option value="mage">                           
+                                <section className={styles.titleSection}>
+                                    <img src="https://placehold.co/40x40" alt="" />
+                                    <h5>Mage</h5>
+                                </section>
+                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>                           
+                        </Option>
+                        <Option value="thief">                            
+                                <section className={styles.titleSection}>
+                                    <img src="https://placehold.co/40x40" alt="" />
+                                    <h5>Thief</h5>
+                                </section>
+                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>                            
+                        </Option>
+                        <Option value="cleric">                           
+                                <section className={styles.titleSection}>
+                                    <img src="https://placehold.co/40x40" alt="" />
+                                    <h5>Cleric</h5>
+                                </section>
+                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>                            
+                        </Option>
                     </Dropdown>
                 </div>
                 <div className={styles.formField}>
