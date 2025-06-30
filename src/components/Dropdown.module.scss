@@ -9,6 +9,7 @@
     align-items: center;
     justify-content: space-between;
     width: 100%;
+    background-color: white;
     // border: 1px solid red;
     .dropdownButton{
         background: transparent;
@@ -21,18 +22,33 @@
 }
 
 .dropDownMenu{
+    box-sizing: border-box;
+    position: relative;
     border: 1px solid gray;
     padding: 0.5rem;
-    border-radius: 8px;
+    border-radius: 8px;    
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    // gap: 1rem;
     width: 60%;
+    &[aria-expanded="true"]{
+        border-radius: 8px 8px 0 0; 
+    }
 }
 
 .listbox{
+    box-sizing: border-box;
+    position: absolute;
+    top: 100%;
+    left: -0.8px;
+    padding: 0.5rem;
+    // margin-top: -0.3rem;    
+    width: calc(100% + 1.6px); ;
+    background-color: white;
+    border: 1px solid gray;
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+    border-radius: 0 0 8px 8px;
    
 }

@@ -38,7 +38,8 @@ export function Dropdown({ id, name, children }: PropsWithChildren<DropdownProps
             return;            
         }
         const childrenArray = React.Children.toArray(selectedChild.props.children);
-        setSectionToDisplay(childrenArray[0] as React.ReactElement);       
+        setSectionToDisplay(childrenArray[0] as React.ReactElement); 
+        setShowList(false);       
 
     },[value]);
 
@@ -47,7 +48,7 @@ export function Dropdown({ id, name, children }: PropsWithChildren<DropdownProps
     return (
         <>
             <input type="hidden" name={name} value={value} id={id} />
-            <section className={styles.dropDownMenu}>
+            <section className={styles.dropDownMenu} aria-expanded={showList}>
                 <section role="combobox" className={styles.dropdownSummary}>
                     {sectionToDisplay || value}
                     <button className={styles.dropdownButton} onClick={(e) => {
