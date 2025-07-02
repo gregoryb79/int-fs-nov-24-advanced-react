@@ -23,12 +23,9 @@ export function RichTextEditor() {
 
     function handleKeyDown(e: KeyboardEvent<HTMLDivElement>) {
         // TODO:
-        //  * Handle uppercase letters
-        //  * Handle space
-        //  * Handle tab
-        //  * Handle return
-        //------------------------------
-        //  * Handle backspace
+        //  * Show cursor only when focused
+        //  * Move cursor back and forward with left and right arrow keys
+        //  * Always keep cursor in view
         console.log(e.key);
         
         if (e.key.length === 1) {
@@ -54,7 +51,7 @@ export function RichTextEditor() {
 
     return (
         <div className={styles.container} tabIndex={0} onKeyDown={handleKeyDown}>
-            {state}
+            {state}<span className={styles.cursor}>|</span>
         </div>
     );
 }
