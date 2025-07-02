@@ -11,11 +11,21 @@ type Action =
     | { type: "insert", value: string }
     | { type: "backspace" }
     | { type: "delete" }
-    | { type: "move cursor", by: number };
+    | { type: "newline" }
+    | { type: "move cursor horizontal", by: number };
 
 const clamp = (min: number, num: number, max: number) => Math.max(min, Math.min(max, num));
 
-const getAbsoluteCursorPosition = (state: State) => state.cursorPosition.x;
+const getAbsoluteCursorPosition = ({ cursorPosition, text }: State) => cursorPosition.x + text.split("\n").slice(0, cursorPosition.y).reduce((sum, line) => sum + line.length + 1, 0);
+
+const getCursotPosition = (absolutePosition: number, text: string): CursorPosition => {
+    const lines = text.slice(0, absolutePosition).split("\n");
+
+    return {
+        y: lines.length - 1,
+        x: lines.at(-1)!.length,
+    };
+};
 
 function reducer(state: State, action: Action): State {
     const { text, cursorPosition } = state;
@@ -34,20 +44,25 @@ function reducer(state: State, action: Action): State {
             ...state,
             text: text.slice(0, absoluteCursorPosition - 1) + text.slice(absoluteCursorPosition),
             cursorPosition: {
-                ...cursorPosition,
-                x: cursorPosition.x - 1,
+                x: cursorPosition.x === 0 ? text.split("\n")[cursorPosition.y - 1].length : cursorPosition.x - 1,
+                y: cursorPosition.x === 0 ? cursorPosition.y - 1 : cursorPosition.y,
             },
         };
         case "delete": return absoluteCursorPosition === text.length ? state : {
             ...state,
             text: text.slice(0, absoluteCursorPosition) + text.slice(absoluteCursorPosition + 1),
         };
-        case "move cursor": return {
+        case "newline": return {
             ...state,
+            text: text.slice(0, absoluteCursorPosition) + "\n" + text.slice(absoluteCursorPosition),
             cursorPosition: {
-                ...cursorPosition,
-                x: clamp(0, cursorPosition.x + action.by, text.length)
+                x: 0,
+                y: cursorPosition.y + 1,
             },
+        };
+        case "move cursor horizontal": return {
+            ...state,
+            cursorPosition: getCursotPosition(clamp(0, absoluteCursorPosition + action.by, text.length), text),
         };
     }
 }
@@ -64,7 +79,7 @@ export function RichTextEditor() {
     );
     const absoluteCursorPosition = getAbsoluteCursorPosition(state);
     const cursorRef = useRef<HTMLSpanElement>(null);
-    
+
     cursorRef.current?.scrollIntoView({
         block: "nearest",
         inline: "nearest",
@@ -72,11 +87,15 @@ export function RichTextEditor() {
 
     function handleKeyDown(e: KeyboardEvent<HTMLDivElement>) {
         // TODO:
-        //  * Support Delete button
         //  * Support up and down arrows (maintain horizontal position)
         //  * Support home and end
+        //  * Support ctrl + stuff
+        //  * Support shift
+        //  * Support mouse cursor control
+        //  * Support text highlighting
+        //  * Support switching writing direction (ctrl + shift)
         // console.log(e.key);
-        
+
         if (e.key.length === 1) {
             e.preventDefault();
             dispatch({ type: "insert", value: e.key });
@@ -84,7 +103,7 @@ export function RichTextEditor() {
 
         if (e.key === "Enter") {
             e.preventDefault();
-            dispatch({ type: "insert", value: "\n" });
+            dispatch({ type: "newline" });
         }
 
         if (e.key === "Tab") {
@@ -104,16 +123,14 @@ export function RichTextEditor() {
 
         if (e.key === "ArrowLeft") {
             e.preventDefault();
-            dispatch({ type: "move cursor", by: -1 });
+            dispatch({ type: "move cursor horizontal", by: -1 });
         }
 
         if (e.key === "ArrowRight") {
             e.preventDefault();
-            dispatch({ type: "move cursor", by: 1 });
+            dispatch({ type: "move cursor horizontal", by: 1 });
         }
     }
-
-    console.log(state.cursorPosition);
 
     return (
         <div className={styles.container} tabIndex={0} onKeyDown={handleKeyDown}>
