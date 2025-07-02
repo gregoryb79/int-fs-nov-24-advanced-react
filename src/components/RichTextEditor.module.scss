@@ -1,0 +1,12 @@
+.container {
+    height: 10ex;
+    border: 1px solid lightgray;
+    border-radius: 8px;
+    resize: none;
+    padding: 0.5em 0.8em;
+    overflow: auto;
+
+    &:focus-visible {
+        outline: 1px solid var(--color-primary-500);
+    }
+}
