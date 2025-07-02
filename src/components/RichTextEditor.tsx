@@ -1,4 +1,4 @@
-import { useReducer, type KeyboardEvent } from "react";
+import { useReducer, useRef, type KeyboardEvent } from "react";
 import styles from "./RichTextEditor.module.scss";
 
 type State = {
@@ -41,12 +41,18 @@ export function RichTextEditor() {
         reducer,
         initialState
     );
+    const cursorRef = useRef<HTMLSpanElement>(null);
+
+    cursorRef.current?.scrollIntoView({
+        block: "nearest",
+        inline: "nearest",
+    });
 
     function handleKeyDown(e: KeyboardEvent<HTMLDivElement>) {
         // TODO:
-        //  * Show cursor only when focused
-        //  * Move cursor back and forward with left and right arrow keys
-        //  * Always keep cursor in view
+        //  * Support Delete button
+        //  * Support up and down arrows (maintain horizontal position)
+        //  * Support home and end
         // console.log(e.key);
         
         if (e.key.length === 1) {
@@ -84,7 +90,7 @@ export function RichTextEditor() {
 
     return (
         <div className={styles.container} tabIndex={0} onKeyDown={handleKeyDown}>
-            {state.text.slice(0, state.cursorPosition)}<span className={styles.cursor}>|</span>{state.text.slice(state.cursorPosition)}
+            {state.text.slice(0, state.cursorPosition)}<span className={styles.cursor} ref={cursorRef}>|</span>{state.text.slice(state.cursorPosition)}
         </div>
     );
 }
