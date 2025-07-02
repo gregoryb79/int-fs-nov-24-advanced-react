@@ -2,6 +2,7 @@ import { useState } from "react";
 import { createPortal } from "react-dom";
 import { MyForm } from "./components/MyForm";
 import { Tooltip } from "./components/Tooltip";
+import { RichTextEditor } from "./components/RichTextEditor";
 
 import styles from "./App.module.scss";
 
@@ -10,6 +11,7 @@ export function App() {
     <main className={styles.container}>
       <h1>Advanced React</h1>
       <CharacterForm />
+      <RichTextEditor />
       <article>
         <h2>About this app</h2>
         <Tooltip />
